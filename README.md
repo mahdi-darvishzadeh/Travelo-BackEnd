@@ -1,2 +1,2 @@
-# Travelo
- project for uni
+# travelo
+ For software engineering project
