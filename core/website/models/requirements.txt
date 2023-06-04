@@ -1,0 +1,47 @@
+# general  modules
+django >3.2,<3.3
+Pillow
+djangorestframework
+
+# authentication
+
+# validations
+phonenumbers
+
+# env controlls
+python-decouple
+
+# third party modules
+markdown       
+django-filter  
+drf-yasg
+drf-yasg[validation]
+djangorestframework-simplejwt
+django-cors-headers
+django-csp
+django-robots
+django-debug-toolbar
+
+# deployment module
+gunicorn
+
+# refactoring and tests
+black
+flake8
+pytest
+mock
+pytest-django
+Faker
+drf_spectacular
+
+# background proccess and cache
+
+
+# database client
+psycopg2-binary
+
+
+django-sslserver
+
+
+python-dateutil

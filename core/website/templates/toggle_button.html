@@ -1,0 +1,49 @@
+{% include "django/forms/widgets/input.html" %}
+
+<script>
+  var checkbox = document.getElementById("{{ widget.attrs.id }}");
+  var toggle = document.createElement("div");
+  toggle.className = "toggle";
+  checkbox.parentNode.insertBefore(toggle, checkbox.nextSibling);
+  checkbox.style.display = "none";
+
+  function updateToggle() {
+    toggle.classList.toggle("checked", checkbox.checked);
+    checkbox.checked = !checkbox.checked;
+  }
+
+  toggle.addEventListener("onchange", updateToggle);
+  toggle.addEventListener("onclick", updateToggle);
+</script>
+
+<style>
+  .toggle {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .toggle.checked {
+    background-color: #2196f3;
+  }
+
+  .toggle:before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: transform 0.3s;
+  }
+
+  .toggle.checked:before {
+    transform: translateX(20px);
+  }
+</style>
