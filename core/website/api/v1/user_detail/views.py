@@ -1,16 +1,12 @@
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import viewsets
 from rest_framework.generics import GenericAPIView
 from .serializers import ProfileSerializer
-from rest_framework.views import APIView
 from website.models.profile import UserDetail
 from website.models.users import User
 from website.api.tools.api import CustomException
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from rest_framework.permissions import IsAuthenticated
-from django.shortcuts import get_object_or_404
 
 class ProfileView(GenericAPIView):
     serializer_class = ProfileSerializer
@@ -56,11 +52,4 @@ class ProfileView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-class UserNameView(APIView):
-    def get(self, request, *args, **kwargs):
-        users = User.objects.all().values_list("username")
-        return Response(
-            data={"users": [u[0] for u in users]}, status=status.HTTP_200_OK
-        )
     

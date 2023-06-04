@@ -6,6 +6,7 @@ from faker import Faker
 import random
 from website.models import User
 from website.models import UserDetail
+from random import randint, uniform, random, choice
 
 
 class Command(BaseCommand):
@@ -14,6 +15,13 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.fake = Faker("fa_IR")
+        self.images = [
+            'static-files/faker/1.jpeg',
+            'static-files/faker/2.jpeg',
+            'static-files/faker/3.jpeg',
+            'static-files/faker/4.jpeg',
+            'static-files/faker/5.jpeg',
+        ]
     
     def handle(self, *args, **kwargs):
         ''' generate 50 fake user and user profile'''
@@ -22,37 +30,33 @@ class Command(BaseCommand):
                 user = User.objects.create_user(username=self.fake.user_name() , password="fake@1234",
                                                 phone = self.fake.phone_number() , email = self.fake.email())
                 userDetail = UserDetail.objects.get(user=user)
-                userDetail.gender = random.choice(["مرد", "زن"])
-                if userDetail.gender == "male":
+                userDetail.gender = choice(["مرد", "زن"])
+                if userDetail.gender == "male" or "مرد":
                     first_name = self.fake.first_name_male()
                 else:
                     first_name = self.fake.first_name_female()
-                last_name = self.fake.last_name()
-                userDetail.fullname = first_name + ' ' + last_name
+                userDetail.first_name = first_name
+                userDetail.last_name = self.fake.last_name()
                 userDetail.education = self.fake.text(max_nb_chars=10)
                 userDetail.job = self.fake.job()
                 userDetail.city = self.fake.city()
-                userDetail.province = self.fake.city()
-                userDetail.post_code = self.fake.postcode()
                 userDetail.birthdate = self.fake.date()
                 unique_numbers = []
                 while len(unique_numbers) < 10:
                     unique_numbers.append(self.fake.unique.random_number(digits=10))
-                userDetail.veterinary_number = unique_numbers[0]
-                userDetail.marital_status = random.choice(["متاهل", "مجرد"])
-                userDetail.national_code = unique_numbers[1]
-                userDetail.favorite = self.fake.paragraph(nb_sentences=5)
-                userDetail.telephone = self.fake.unique.random_number(digits=10)
+                userDetail.marital_status = choice(["متاهل", "مجرد"])
+                userDetail.description = self.fake.paragraph(nb_sentences=5)
+                userDetail.phone_number = self.fake.unique.random_number(digits=15)
                 userDetail.telegram = unique_numbers[2]
-                userDetail.twitter = unique_numbers[3]
                 userDetail.instagram = unique_numbers[4]
-                userDetail.tiktok = unique_numbers[5]
-                userDetail.bale = unique_numbers[6]
-                userDetail.rubika = unique_numbers[7]
-                userDetail.gap = unique_numbers[8]
-                userDetail.website = self.fake.url()
+                userDetail.rate = float("%.2f" % uniform(0,5))
+                userDetail.trips_count = randint(0, 100)
                 userDetail.save()
-            except:
+                image = self.images[randint(0,4)]
+                userDetail.image = image
+                userDetail.save()
+            except Exception as e:
+                print(e)
                 print("Username has already been taken!")
         print("Start checking for database...")
         db_conn = None

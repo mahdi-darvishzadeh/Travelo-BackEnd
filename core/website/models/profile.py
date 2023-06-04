@@ -29,6 +29,7 @@ class UserDetail(models.Model):
     birthdate = models.DateField(null=True, blank=True)
     marital_status = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    phone_number = models.CharField(max_length=255, null=True)
     telegram = models.CharField(max_length=255, unique=True, null=True, blank=True)
     instagram = models.CharField(max_length=255, unique=True, null=True, blank=True)
 

@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from website.models.profile import UserDetail
-from django.urls import reverse
 
 class ProfileSerializer(serializers.ModelSerializer):
     phone = serializers.SerializerMethodField()
