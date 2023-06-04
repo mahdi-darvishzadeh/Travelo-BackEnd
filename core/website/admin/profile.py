@@ -5,11 +5,14 @@ from website.models import UserDetail
 class UserDetailAdmin(admin.ModelAdmin):
     list_display = [
         "id",
-        "fullname",
         "user",
+        "first_name",
+        "last_name",
         "job",
         "gender",
         "birthdate",
+        "trips_count",
+        "rate",
         "created_at",
         "updated_at",
     ]

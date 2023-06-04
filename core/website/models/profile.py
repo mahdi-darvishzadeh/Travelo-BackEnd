@@ -15,16 +15,20 @@ def create_user_profile(sender, instance, created, **kwargs):
 class UserDetail(models.Model):
     # available in Profile endpoint
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    fullname = models.CharField(max_length=255, null=True, blank=True)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
     education = models.CharField(max_length=255, null=True, blank=True)
     job = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
+    rate = models.FloatField(null=True, blank=True)
+    trips_count = models.IntegerField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, upload_to="profile_image/")
 
     # extra information
     gender = models.CharField(max_length=255, null=True, blank=True)
     birthdate = models.DateField(null=True, blank=True)
     marital_status = models.CharField(max_length=255, null=True, blank=True)
-    favorite = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     telegram = models.CharField(max_length=255, unique=True, null=True, blank=True)
     instagram = models.CharField(max_length=255, unique=True, null=True, blank=True)
 

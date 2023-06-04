@@ -13,7 +13,8 @@ import phonenumbers
 
 class SignupSerializer(serializers.Serializer):
     phone_or_email = serializers.CharField(max_length=255, required=True)
-    fullname = serializers.CharField(max_length=255, required=True)
+    first_name = serializers.CharField(max_length=255, required=True)
+    last_name = serializers.CharField(max_length=255, required=True)
     password = serializers.CharField(max_length=255, required=True)
     password2 = serializers.CharField(max_length=255, required=True)
 
@@ -87,9 +88,10 @@ class SignupSerializer(serializers.Serializer):
                 password=validated_data["password"],
             )
 
-        # get the profile of user and attach fullname to it
+        # get the profile of user and attach firstname & lastname to it
         user_profile = UserDetail.objects.get(user=user)
-        user_profile.fullname = validated_data["fullname"]
+        user_profile.first_name = validated_data["first_name"]
+        user_profile.last_name = validated_data["last_name"]
         user_profile.save()
 
         # get access and refresh

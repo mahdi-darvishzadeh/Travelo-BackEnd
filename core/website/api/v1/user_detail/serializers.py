@@ -6,6 +6,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     phone = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
     is_verified = serializers.BooleanField(source="user.is_verified" , read_only=True)
+    rate = serializers.FloatField(source="user.rate" , read_only=True)
+    trips_count = serializers.FloatField(source="user.trips_count" , read_only=True)
 
     class Meta:
         model = UserDetail
@@ -13,11 +15,15 @@ class ProfileSerializer(serializers.ModelSerializer):
             "pk",
             "phone",
             "email",
-            "fullname",
+            "first_name",
+            "last_name",
+            "rate",
+            "trips_count",
+            "image",
             "education",
             "job",
             "city",
-            "favorite",
+            "description",
             "instagram",
             "gender",
             "marital_status",
@@ -39,11 +45,11 @@ class ProfileSerializer(serializers.ModelSerializer):
             if field_value != None:
                 counter += 1
 
-        # total fields number is 24, which 3 of them are filled by django
+        # total fields number is 18, which 3 of them are filled by django
         # [created_at, updated_at, id] so we subtract total from 3
-        # 24 - 3 = 21, average formula will be: total / 21 * 100
+        # 15 - 3 = 12, average formula will be: total / 12 * 100
         total = counter - 3
-        percentage = round((total / 22) * 100)
+        percentage = round((total / 12) * 100)
 
         # add percentage to other representation fields
         data = super().to_representation(instance)
