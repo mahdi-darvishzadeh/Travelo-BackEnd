@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from website.models import Trip
-from .serializers import TripSerializerList, TripSerializerCreate
+from .serializers import TripSerializerList
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
@@ -20,13 +20,3 @@ class TripViewSet(viewsets.ModelViewSet):
             "trip_for_now": trip_for_now_serializer.data,
         }
         return Response(data)
-    
-class TripCreateAPIView(GenericAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = TripSerializerCreate
-
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)

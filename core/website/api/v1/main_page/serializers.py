@@ -29,26 +29,3 @@ class TripSerializerList(serializers.ModelSerializer):
     #         "website:main-page:retrieve-trip", kwargs={"pk": obj.pk}
     #     )
     
-class TripSerializerCreate(serializers.ModelSerializer):
-    owner = serializers.SlugRelatedField(
-        slug_field="pk",
-        queryset=User.objects.all(),
-        required=True,
-    )
-
-    class Meta:
-        model = Trip
-        fields = [
-            "owner",
-            "country",
-            "from_city",
-            "to_city",
-            "moving_day",
-            "Transportstion",
-            "price",
-            "description"
-            ]
-
-    def validate(self, attrs):
-        return super().validate(attrs)
-    
