@@ -14,7 +14,7 @@ class Trip(models.Model):
     rate = models.FloatField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     
-    appear_and_search = models.BooleanField(default=False)
+    appear_in_search = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

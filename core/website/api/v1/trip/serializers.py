@@ -14,6 +14,7 @@ class TripSerializerCreate(serializers.ModelSerializer):
     class Meta:
         model = Trip
         fields = [
+            "pk",
             "owner",
             "country",
             "from_city",

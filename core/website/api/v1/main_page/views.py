@@ -1,14 +1,15 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from website.models import Trip
-from .serializers import TripSerializerList
+from .serializers import TripSerializerList, TripSerializerRetrieve
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 class TripViewSet(viewsets.ModelViewSet):
     def list(self, request):
-        queryset = Trip.objects.filter(appear_and_search=True,)
+        queryset = Trip.objects.filter(appear_in_search=True,)
         q_best_driver = queryset.order_by("-rate", "-like_count")[:20]
         q_trip_for_now = queryset.order_by("-created_at", "-moving_day")[:20]
         best_driver_serializer = TripSerializerList(
@@ -20,3 +21,8 @@ class TripViewSet(viewsets.ModelViewSet):
             "trip_for_now": trip_for_now_serializer.data,
         }
         return Response(data)
+
+    def retrieve(self, request, pk=None):
+        trip = get_object_or_404(Trip, pk=pk, appear_in_search=True)
+        serializer = TripSerializerRetrieve(trip)
+        return Response(serializer.data)

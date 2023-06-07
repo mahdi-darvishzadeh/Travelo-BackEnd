@@ -20,7 +20,7 @@ class TripSerializerList(serializers.ModelSerializer):
             "price",
             "like_count",
             "dislike_count",
-            "appear_and_search",
+            "appear_in_search",
             "created_at",
         ]
 
@@ -28,4 +28,12 @@ class TripSerializerList(serializers.ModelSerializer):
     #     return reverse(
     #         "website:main-page:retrieve-trip", kwargs={"pk": obj.pk}
     #     )
+    
+class TripSerializerRetrieve(serializers.ModelSerializer):
+
+    class Meta:
+        model = Trip
+        exclude = [
+            "updated_at"
+        ]
     
