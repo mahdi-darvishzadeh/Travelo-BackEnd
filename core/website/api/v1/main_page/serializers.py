@@ -24,12 +24,9 @@ class TripSerializerList(serializers.ModelSerializer):
             "created_at",
         ]
 
-    # def get_from_city_to_city(self, obj):
-    #     return f"{obj.from_city} > {obj.to_city}"
-
     # def get_absolute_url(self, obj):
     #     return reverse(
-    #         "website:main-page:retrieve-business", kwargs={"pk": obj.pk}
+    #         "website:main-page:retrieve-trip", kwargs={"pk": obj.pk}
     #     )
 
     

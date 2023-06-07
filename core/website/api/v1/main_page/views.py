@@ -1,9 +1,7 @@
-from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from rest_framework.response import Response
 from website.models import Trip
-from .serializers import *
+from .serializers import TripSerializerList
 
 class TripViewSet(viewsets.ModelViewSet):
     def list(self, request):
