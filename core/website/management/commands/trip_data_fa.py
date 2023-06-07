@@ -33,6 +33,7 @@ class Command(BaseCommand):
                     from_city=choice(self.cities[randint(0, len(self.cities))]['sub']),
                     to_city=choice(self.cities[randint(0, len(self.cities))]['sub']),
                     moving_day=timezone.now(),
+                    appear_and_search=True,
                     Transportstion=choice(["سواری","مینی بوس","ون","مینی ون","اتوبوس","موتور"]),
                     price=randint(50000,500000),
                     like_count=randint(1,100000),

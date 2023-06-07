@@ -13,6 +13,8 @@ class Trip(models.Model):
     dislike_count = models.IntegerField(default=0, max_length=20, null=True, blank=True)
     rate = models.FloatField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    
+    appear_and_search = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

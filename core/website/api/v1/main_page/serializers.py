@@ -1,0 +1,35 @@
+from rest_framework import serializers
+from website.api.tools.api import CustomException
+from django.urls import reverse
+from rest_framework import status
+from website.models import Trip
+
+
+class TripSerializerList(serializers.ModelSerializer):
+    # absolute_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Trip
+        # appear_in_search is here for test
+        fields = [
+            "pk",
+            "moving_day",
+            "from_city",
+            "to_city",
+            "Transportstion",
+            "price",
+            "like_count",
+            "dislike_count",
+            "appear_and_search",
+            "created_at",
+        ]
+
+    # def get_from_city_to_city(self, obj):
+    #     return f"{obj.from_city} > {obj.to_city}"
+
+    # def get_absolute_url(self, obj):
+    #     return reverse(
+    #         "website:main-page:retrieve-business", kwargs={"pk": obj.pk}
+    #     )
+
+    
