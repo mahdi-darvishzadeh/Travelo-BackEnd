@@ -3,6 +3,7 @@ from website.api.tools.api import CustomException
 from django.urls import reverse
 from rest_framework import status
 from website.models import Trip, User
+from datetime import datetime
 
 class TripSerializerCreate(serializers.ModelSerializer):
     owner = serializers.SlugRelatedField(
@@ -10,6 +11,7 @@ class TripSerializerCreate(serializers.ModelSerializer):
         queryset=User.objects.all(),
         required=True,
     )
+    moving_day = serializers.DateField(input_formats=["%Y-%m-%d"])
 
     class Meta:
         model = Trip
@@ -26,5 +28,9 @@ class TripSerializerCreate(serializers.ModelSerializer):
             ]
 
     def validate(self, attrs):
-        return super().validate(attrs)
+        moving_day = attrs.get("moving_day")
+        if moving_day:
+            return super().validate(attrs)
+        else:
+            raise serializers.ValidationError("Invalid date")
     
