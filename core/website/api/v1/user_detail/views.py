@@ -7,7 +7,10 @@ from website.models.users import User
 from website.api.tools.api import CustomException
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from rest_framework.decorators import parser_classes
+from rest_framework.parsers import MultiPartParser, FormParser
 
+@parser_classes((MultiPartParser, FormParser))
 class ProfileView(GenericAPIView):
     serializer_class = ProfileSerializer
     def get_queryset(self, username):
@@ -43,7 +46,6 @@ class ProfileView(GenericAPIView):
         query = self.get_queryset(username)
         serializer = self.serializer_class(query)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
     def put(self, request, *args, **kwargs):
         if request.resolver_match.url_name != "profile-authorized": 
             return self.http_method_not_allowed(request, *args, **kwargs)

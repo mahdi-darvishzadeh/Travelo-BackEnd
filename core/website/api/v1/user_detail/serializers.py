@@ -7,6 +7,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     is_verified = serializers.BooleanField(source="user.is_verified" , read_only=True)
     rate = serializers.FloatField(source="user.rate" , read_only=True)
     trips_count = serializers.FloatField(source="user.trips_count" , read_only=True)
+    image = serializers.ImageField(required=False, )
 
     class Meta:
         model = UserDetail
