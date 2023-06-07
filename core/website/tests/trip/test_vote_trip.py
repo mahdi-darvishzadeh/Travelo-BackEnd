@@ -25,7 +25,6 @@ class TestTripVote():
 
     """INVALID DATA"""
     def test_create_trip_invalid_data_response_400(self, ApiClient , CommonTrip):
-        refresh = RefreshToken.for_user(User.objects.get(pk = '2'))
         # Case0: using wrong vote
         response = ApiClient.post(self.url , data = {
                 "vote": "string"

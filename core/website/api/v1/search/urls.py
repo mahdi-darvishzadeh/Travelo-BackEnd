@@ -7,5 +7,5 @@ from .views import TripSearchGenericAPIView
 app_name = "search"
 
 urlpatterns = [
-    path('trip/' , TripSearchGenericAPIView.as_view(), name="partial-search")  
+    path('trip/' , TripSearchGenericAPIView.as_view(), name="trip")  
 ]
