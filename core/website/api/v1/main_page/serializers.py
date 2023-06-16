@@ -21,6 +21,7 @@ class TripSerializerList(serializers.ModelSerializer):
             "like_count",
             "dislike_count",
             "appear_in_search",
+            "absolute_url",
             "created_at",
         ]
 

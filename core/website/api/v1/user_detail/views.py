@@ -58,7 +58,7 @@ class ProfileView(GenericAPIView):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-class TripViewSet(viewsets.ModelViewSet):
+class FavoriteTripViewSet(viewsets.ModelViewSet):
     permission_classes =[IsAuthenticated]
     def list(self, request):
         userdetail = UserDetail.objects.get(user=request.user)
@@ -68,4 +68,11 @@ class TripViewSet(viewsets.ModelViewSet):
             serializer = TripSerializerList(queryset, many=True)
             data.extend(serializer.data)
         return Response(data)
+    
+class MyTripViewSet(viewsets.ModelViewSet):
+    permission_classes =[IsAuthenticated]
+    def list(self, request):
+        queryset = Trip.objects.filter(owner=request.user)
+        serializer = TripSerializerList(queryset, many=True)
+        return Response(serializer.data)
     
