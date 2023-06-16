@@ -32,7 +32,7 @@ class Command(BaseCommand):
             id = choice(x)
             try:
                 user = User.objects.create_user(username=f"travelo-{id}" , password="fake@1234",
-                                                phone = self.fake.phone_number() , email = self.fake.email())
+                                                phone=self.fake.phone_number() , email=self.fake.email())
                 userDetail = UserDetail.objects.get(user=user)
                 userDetail.gender = choice(["مرد", "زن"])
                 if userDetail.gender == "male" or "مرد":

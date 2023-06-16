@@ -17,6 +17,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "email",
             "first_name",
             "last_name",
+            "birthdate",
             "rate",
             "trips_count",
             "image",
@@ -24,10 +25,16 @@ class ProfileSerializer(serializers.ModelSerializer):
             "career",
             "living_in",
             "description",
+            "telegram",
             "instagram",
             "gender",
             "marital_status",
+            "phone_number",
+            "personality_type",
+            "workout",
             "is_verified",
+            "created_at",
+            "updated_at",
         ]
         read_only_fields = ["is_verified"]
 
@@ -45,11 +52,11 @@ class ProfileSerializer(serializers.ModelSerializer):
             if field_value != None:
                 counter += 1
 
-        # total fields number is 18, which 3 of them are filled by django
-        # [created_at, updated_at, id] so we subtract total from 3
-        # 15 - 3 = 12, average formula will be: total / 12 * 100
-        total = counter - 3
-        percentage = round((total / 12) * 100)
+        # total fields number is 23, which 6 of them are filled by django
+        # [created_at, updated_at, id, favorite, trips_count, rate] so we subtract total from 6
+        # 23 - 6 = 16, average formula will be: total / 16 * 100
+        total = counter - 6
+        percentage = round((total / 16) * 100)
 
         # add percentage to other representation fields
         data = super().to_representation(instance)
