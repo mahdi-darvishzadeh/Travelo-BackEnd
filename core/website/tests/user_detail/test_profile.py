@@ -37,10 +37,10 @@ class TestProfile():
         assert 'first_name' in content
         assert 'last_name' in content
         assert 'education' in content
-        assert 'job' in content
+        assert 'career' in content
         assert 'gender' in content
         assert 'marital_status' in content
         assert 'age' in content
-        assert 'city' in content
+        assert 'living_in' in content
         assert 'completion_percentage' in content
 

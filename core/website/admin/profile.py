@@ -8,7 +8,7 @@ class UserDetailAdmin(admin.ModelAdmin):
         "user",
         "first_name",
         "last_name",
-        "job",
+        "career",
         "gender",
         "birthdate",
         "trips_count",
@@ -16,11 +16,12 @@ class UserDetailAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     ]
-    list_filter = ["job", "gender", "education"]
+    list_filter = ["career", "gender", "education"]
     search_fields = [
-        "fullname",
+        "first_name",
+        "last_name",
         "education",
-        "job",
+        "career",
         "user",
         "telegram",
         "instagram",

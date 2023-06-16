@@ -38,15 +38,17 @@ class Command(BaseCommand):
                 userDetail.first_name = first_name
                 userDetail.last_name = self.fake.last_name()
                 userDetail.education = self.fake.text(max_nb_chars=10)
-                userDetail.job = self.fake.job()
-                userDetail.city = self.fake.city()
+                userDetail.career = self.fake.job()
+                userDetail.living_in = self.fake.city()
                 userDetail.birthdate = self.fake.date()
+                userDetail.personality_type = 'normal'
+                userDetail.workout = 'bodybuilding'
                 unique_numbers = []
                 while len(unique_numbers) < 10:
                     unique_numbers.append(self.fake.unique.random_number(digits=10))
                 userDetail.marital_status = choice(["متاهل", "مجرد"])
                 userDetail.description = self.fake.paragraph(nb_sentences=5)
-                userDetail.phone_number = self.fake.unique.random_number(digits=15)
+                userDetail.phone_number = "+98 912 3456 789"
                 userDetail.telegram = unique_numbers[2]
                 userDetail.instagram = unique_numbers[4]
                 userDetail.rate = float("%.2f" % uniform(0,5))

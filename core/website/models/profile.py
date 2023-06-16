@@ -1,6 +1,7 @@
 from django.db import models
 from website.models.users import User
 from django.db.models.signals import post_save
+from django.contrib.postgres import fields as pgmodels
 from django.dispatch import receiver
 from datetime import date
 from rest_framework import status
@@ -18,11 +19,19 @@ class UserDetail(models.Model):
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
     education = models.CharField(max_length=255, null=True, blank=True)
-    job = models.CharField(max_length=255, null=True, blank=True)
-    city = models.CharField(max_length=255, null=True, blank=True)
+    career = models.CharField(max_length=255, null=True, blank=True)
+    living_in = models.CharField(max_length=255, null=True, blank=True)
     rate = models.FloatField(null=True, blank=True)
     trips_count = models.IntegerField(null=True, blank=True)
     image = models.ImageField(null=True, blank=True, upload_to="profile_image/")
+    personality_type = models.CharField(max_length=255, null=True, blank=True)
+    workout = models.CharField(max_length=255, null=True, blank=True)
+    favorite = pgmodels.ArrayField(
+        models.CharField(max_length=255, default=""),
+        default=list,
+        null=True,
+        blank=True,
+        )
 
     # extra information
     gender = models.CharField(max_length=255, null=True, blank=True)
@@ -38,7 +47,7 @@ class UserDetail(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"UserDetail obj: {self.id}-{self.fullname}"
+        return f"UserDetail obj: {self.id}-{self.first_name,self.last_name}"
 
     @property
     def age(self):
