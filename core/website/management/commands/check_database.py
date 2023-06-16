@@ -17,11 +17,20 @@ class Command(BaseCommand):
         super(Command, self).__init__(*args, **kwargs)
         self.fake = Faker("fa_IR")
         self.images = [
-            'static-files/faker/1.jpeg',
-            'static-files/faker/2.jpeg',
-            'static-files/faker/3.jpeg',
-            'static-files/faker/4.jpeg',
-            'static-files/faker/5.jpeg',
+            'static-files/profile/1.jpeg',
+            'static-files/profile/2.jpeg',
+            'static-files/profile/3.jpeg',
+            'static-files/profile/4.jpeg',
+            'static-files/profile/5.jpeg',
+            'static-files/profile/6.jpeg',
+            'static-files/profile/7.jpeg',
+            'static-files/profile/8.jpeg',
+            'static-files/profile/9.jpeg',
+            'static-files/profile/10.jpeg',
+            'static-files/profile/11.jpeg',
+            'static-files/profile/12.jpeg',
+            'static-files/profile/13.jpeg',
+            'static-files/profile/14.jpeg',
         ]
     
     def handle(self, *args, **kwargs):
@@ -58,7 +67,7 @@ class Command(BaseCommand):
                 userDetail.rate = float("%.2f" % uniform(0,5))
                 userDetail.trips_count = randint(0, 100)
                 userDetail.save()
-                image = self.images[randint(0,4)]
+                image = self.images[randint(0,13)]
                 userDetail.image = image
                 userDetail.save()
             except Exception as e:
