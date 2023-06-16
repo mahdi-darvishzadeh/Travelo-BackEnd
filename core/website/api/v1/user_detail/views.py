@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-from .serializers import ProfileSerializer
+from .serializers import ProfileSerializer, TripSerializerList
 from website.models.profile import UserDetail
 from website.models.users import User
 from website.api.tools.api import CustomException
@@ -9,6 +9,9 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework import viewsets
+from website.models.trip import Trip
+from rest_framework.permissions import IsAuthenticated
 
 @parser_classes((MultiPartParser, FormParser))
 class ProfileView(GenericAPIView):
@@ -54,4 +57,15 @@ class ProfileView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class TripViewSet(viewsets.ModelViewSet):
+    permission_classes =[IsAuthenticated]
+    def list(self, request):
+        userdetail = UserDetail.objects.get(user=request.user)
+        data = []
+        for favorite in userdetail.favorite:
+            queryset = Trip.objects.filter(appear_in_search=True,pk=favorite)
+            serializer = TripSerializerList(queryset, many=True)
+            data.extend(serializer.data)
+        return Response(data)
     

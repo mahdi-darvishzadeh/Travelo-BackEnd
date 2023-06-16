@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from website.models.profile import UserDetail
+from website.models.trip import Trip
+from django.urls import reverse
 
 class ProfileSerializer(serializers.ModelSerializer):
     phone = serializers.SerializerMethodField()
@@ -64,3 +66,28 @@ class ProfileSerializer(serializers.ModelSerializer):
         data["completion_percentage"] = percentage
         data["age"] = instance.age
         return data
+    
+class TripSerializerList(serializers.ModelSerializer):
+    absolute_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Trip
+        # appear_in_search is here for test
+        fields = [
+            "pk",
+            "absolute_url",
+            "moving_day",
+            "from_city",
+            "to_city",
+            "Transportstion",
+            "price",
+            "like_count",
+            "dislike_count",
+            "appear_in_search",
+            "created_at",
+        ]
+
+    def get_absolute_url(self, obj):
+        return reverse(
+            "website:main-page:retrieve-trip", kwargs={"pk": obj.pk}
+        )

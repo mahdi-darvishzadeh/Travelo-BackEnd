@@ -6,7 +6,7 @@ from website.models import Trip, User
 
 
 class TripSerializerList(serializers.ModelSerializer):
-    # absolute_url = serializers.SerializerMethodField()
+    absolute_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Trip
@@ -24,10 +24,10 @@ class TripSerializerList(serializers.ModelSerializer):
             "created_at",
         ]
 
-    # def get_absolute_url(self, obj):
-    #     return reverse(
-    #         "website:main-page:retrieve-trip", kwargs={"pk": obj.pk}
-    #     )
+    def get_absolute_url(self, obj):
+        return reverse(
+            "website:main-page:retrieve-trip", kwargs={"pk": obj.pk}
+        )
     
 class TripSerializerRetrieve(serializers.ModelSerializer):
 

@@ -2,9 +2,6 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from website.models import Trip
 from .serializers import TripSerializerList, TripSerializerRetrieve
-from rest_framework.generics import GenericAPIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 class TripViewSet(viewsets.ModelViewSet):
