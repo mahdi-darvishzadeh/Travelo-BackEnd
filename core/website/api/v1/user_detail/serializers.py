@@ -91,3 +91,38 @@ class TripSerializerList(serializers.ModelSerializer):
         return reverse(
             "website:main-page:retrieve-trip", kwargs={"pk": obj.pk}
         )
+        
+class ProfilePeopleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserDetail
+        fields = [
+            "pk",
+            "first_name",
+            "last_name",
+            "rate",
+            "trips_count",
+            "image",
+            "education",
+            "career",
+            "living_in",
+            "description",
+            "telegram",
+            "instagram",
+            "gender",
+            "marital_status",
+            "personality_type",
+            "workout",
+            "created_at",
+        ]
+
+    def get_phone(self, obj):
+        return str(obj.user.phone)
+
+    def get_email(self, obj):
+        return str(obj.user.email)
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["age"] = instance.age
+        return data

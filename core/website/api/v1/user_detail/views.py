@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-from .serializers import ProfileSerializer, TripSerializerList
+from .serializers import ProfileSerializer, TripSerializerList, ProfilePeopleSerializer
 from website.models.profile import UserDetail
 from website.models.users import User
 from website.api.tools.api import CustomException
@@ -75,4 +75,21 @@ class MyTripViewSet(viewsets.ModelViewSet):
         queryset = Trip.objects.filter(owner=request.user)
         serializer = TripSerializerList(queryset, many=True)
         return Response(serializer.data)
+    
+class PeopleViewSet(viewsets.ModelViewSet):
+    permission_classes =[IsAuthenticated]
+    def list(self, request):
+        queryset = UserDetail.objects.all()
+        q_most_eligible = queryset.order_by("-rate", "-trips_count")[:10]
+        q_trip_Nearby = queryset.order_by("-created_at", "-trips_count")[:10]
+        q_views = queryset.order_by("-rate", "-created_at")[:10]
+        most_eligible_serializer = ProfilePeopleSerializer(q_most_eligible, many=True)
+        trip_Nearby_serializer = ProfilePeopleSerializer(q_trip_Nearby, many=True)
+        views_serializer = ProfilePeopleSerializer(q_views, many=True)
+        data = {
+            "most_eligible": most_eligible_serializer.data,
+            "trip_Nearby": trip_Nearby_serializer.data,
+            "views": views_serializer.data,
+        }
+        return Response(data)
     
