@@ -5,6 +5,7 @@ from django.contrib.postgres import fields as pgmodels
 from django.dispatch import receiver
 from datetime import date
 from rest_framework import status
+from website.api.tools.api import CustomException
 
 # Create profile object after user creation
 @receiver(post_save, sender=User)
@@ -12,6 +13,17 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserDetail.objects.create(user=instance)
 
+# from website.models.profile import UniqueArrayField
+class UniqueArrayField(pgmodels.ArrayField):
+    def validate(self, value, model_instance):
+        super().validate(value, model_instance)
+        
+        if len(value) != len(set(value)):
+            raise CustomException(
+                "Values in the array must be unique.",
+                "error",
+                status_code=status.HTTP_400_BAD_REQUEST
+                )
 
 class UserDetail(models.Model):
     # available in Profile endpoint
@@ -26,12 +38,7 @@ class UserDetail(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to="profile_image/")
     personality_type = models.CharField(max_length=255, null=True, blank=True)
     workout = models.CharField(max_length=255, null=True, blank=True)
-    favorite = pgmodels.ArrayField(
-        models.CharField(max_length=255, default=""),
-        default=list,
-        null=True,
-        blank=True,
-        )
+    favorite = UniqueArrayField(models.CharField(max_length=255), null=True, blank=True)
 
     # extra information
     gender = models.CharField(max_length=255, null=True, blank=True)
@@ -59,3 +66,4 @@ class UserDetail(models.Model):
                 - ((today.month, today.day) < (self.birthdate.month, self.birthdate.day))
             )
             return age
+        

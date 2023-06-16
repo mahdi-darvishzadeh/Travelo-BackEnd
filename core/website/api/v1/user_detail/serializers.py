@@ -8,6 +8,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     rate = serializers.FloatField(source="user.rate" , read_only=True)
     trips_count = serializers.FloatField(source="user.trips_count" , read_only=True)
     image = serializers.ImageField(required=False, )
+    birthdate = serializers.DateField(required=False, input_formats=["%Y-%m-%d"])
 
     class Meta:
         model = UserDetail
