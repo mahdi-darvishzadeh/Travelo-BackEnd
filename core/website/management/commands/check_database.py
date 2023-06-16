@@ -7,6 +7,7 @@ import random
 from website.models import User
 from website.models import UserDetail
 from random import randint, uniform, random, choice
+import uuid
 
 
 class Command(BaseCommand):
@@ -26,8 +27,11 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         ''' generate 50 fake user and user profile'''
         for _ in range(50) :
+            uuid_tmp = str(uuid.uuid4())
+            x = uuid_tmp.split("-")
+            id = choice(x)
             try:
-                user = User.objects.create_user(username=self.fake.user_name() , password="fake@1234",
+                user = User.objects.create_user(username=f"travelo-{id}" , password="fake@1234",
                                                 phone = self.fake.phone_number() , email = self.fake.email())
                 userDetail = UserDetail.objects.get(user=user)
                 userDetail.gender = choice(["مرد", "زن"])
@@ -37,20 +41,20 @@ class Command(BaseCommand):
                     first_name = self.fake.first_name_female()
                 userDetail.first_name = first_name
                 userDetail.last_name = self.fake.last_name()
-                userDetail.education = self.fake.text(max_nb_chars=10)
+                userDetail.education = choice(["مهندسی کامپیوتر", "مهدسی برق", "مهندسی مکانیک", "مهندسی ضنایع", "مهندسی شیمی", "مهندسی نفت", "مهندسی مواد", "حسایداری", "فیزیک", "علوم انسانی"])
                 userDetail.career = self.fake.job()
                 userDetail.living_in = self.fake.city()
                 userDetail.birthdate = self.fake.date()
-                userDetail.personality_type = 'normal'
-                userDetail.workout = 'bodybuilding'
+                userDetail.personality_type = choice(["معمولی", "درونگرا", "برونگرا"])
+                userDetail.workout = choice(["بدنسازی", "فوتبال", "والیبال", "ژیمناستیک", "تنیس"])
                 unique_numbers = []
                 while len(unique_numbers) < 10:
                     unique_numbers.append(self.fake.unique.random_number(digits=10))
                 userDetail.marital_status = choice(["متاهل", "مجرد"])
                 userDetail.description = self.fake.paragraph(nb_sentences=5)
-                userDetail.phone_number = "+98 912 3456 789"
-                userDetail.telegram = unique_numbers[2]
-                userDetail.instagram = unique_numbers[4]
+                userDetail.phone_number = "+98912 3456 789"
+                userDetail.telegram = f"telegram-{unique_numbers[2]}"
+                userDetail.instagram = f"instagram-{unique_numbers[4]}"
                 userDetail.rate = float("%.2f" % uniform(0,5))
                 userDetail.trips_count = randint(0, 100)
                 userDetail.save()
