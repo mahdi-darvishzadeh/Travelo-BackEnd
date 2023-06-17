@@ -17,6 +17,7 @@ from django.shortcuts import get_object_or_404
 
 @parser_classes((MultiPartParser, FormParser))
 class ProfileView(GenericAPIView):
+    permission_classes =[IsAuthenticated]
     serializer_class = ProfileSerializer
     def get_queryset(self, username):
         # return the user with the given username
