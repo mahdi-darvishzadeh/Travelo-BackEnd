@@ -42,7 +42,7 @@ class TripSerializerList(serializers.ModelSerializer):
     
     def get_trip_owner_image(self, obj):
         userdetail = UserDetail.objects.filter(user=obj.owner).first()
-        return settings.MEDIA_URL + str(userdetail.image) if userdetail.image else None
+        return str(userdetail.image) if userdetail.image else None
     
 class TripSerializerRetrieve(serializers.ModelSerializer):
 

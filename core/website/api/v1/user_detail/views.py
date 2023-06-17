@@ -55,7 +55,7 @@ class ProfileView(GenericAPIView):
         if request.resolver_match.url_name != "profile-authorized": 
             return self.http_method_not_allowed(request, *args, **kwargs)
         query = self.get_queryset(username=request.user.username)
-        serializer = self.serializer_class(query, data=request.data)
+        serializer = self.serializer_class(query, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)

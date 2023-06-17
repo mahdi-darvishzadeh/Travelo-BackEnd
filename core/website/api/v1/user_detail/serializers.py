@@ -7,8 +7,7 @@ from django.conf import settings
 from django.urls import reverse
 
 class ProfileSerializer(serializers.ModelSerializer):
-    phone = serializers.SerializerMethodField()
-    email = serializers.SerializerMethodField()
+    email = serializers.EmailField(required=False, )
     is_verified = serializers.BooleanField(source="user.is_verified" , read_only=True)
     rate = serializers.FloatField(source="user.rate" , read_only=True)
     trips_count = serializers.FloatField(source="user.trips_count" , read_only=True)
@@ -44,11 +43,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ["is_verified"]
 
-    def get_phone(self, obj):
-        return str(obj.user.phone)
-
-    def get_email(self, obj):
-        return str(obj.user.email)
+    # def get_email(self, obj):
+    #     return str(obj.user.email)
 
     def to_representation(self, instance):
         # calculate the profile completion percentage
@@ -68,6 +64,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         data["completion_percentage"] = percentage
         data["age"] = instance.age
+        data["image"] = str(instance.image) if instance.image else None
         return data
     
 class TripSerializerList(serializers.ModelSerializer):
@@ -106,7 +103,7 @@ class TripSerializerList(serializers.ModelSerializer):
     
     def get_trip_owner_image(self, obj):
         userdetail = UserDetail.objects.filter(user=obj.owner).first()
-        return settings.MEDIA_URL + str(userdetail.image) if userdetail.image else None
+        return str(userdetail.image) if userdetail.image else None
         
 class ProfilePeopleSerializer(serializers.ModelSerializer):
 
@@ -141,6 +138,7 @@ class ProfilePeopleSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data["age"] = instance.age
+        data["image"] = str(instance.image) if instance.image else None
         return data
     
 class NotificationSerializerList(serializers.ModelSerializer):

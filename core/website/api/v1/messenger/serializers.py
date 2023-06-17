@@ -104,8 +104,10 @@ class MessengerSerializerList(serializers.ModelSerializer):
     absolute_url = serializers.SerializerMethodField()
     user_career = serializers.SerializerMethodField()
     user_fullname = serializers.SerializerMethodField()
+    user_image = serializers.SerializerMethodField()
     trip_owner_career = serializers.SerializerMethodField()
     trip_owner_fullname = serializers.SerializerMethodField()
+    trip_owner_image = serializers.SerializerMethodField()
 
     def get_absolute_url(self, obj:Chat):
         return reverse(
@@ -116,17 +118,25 @@ class MessengerSerializerList(serializers.ModelSerializer):
         userdetail = UserDetail.objects.filter(user=obj.user).first()
         return userdetail.career if userdetail else None
     
-    def get_trip_owner_career(self, obj:Chat):
-        userdetail = UserDetail.objects.filter(user=obj.trip.owner).first()
-        return userdetail.career if userdetail else None
-
     def get_user_fullname(self, obj:Chat):
         userdetail = UserDetail.objects.filter(user=obj.user).first()
         return userdetail.fullname if userdetail else None
     
+    def get_user_image(self, obj):
+        userdetail = UserDetail.objects.filter(user=obj.user).first()
+        return str(userdetail.image) if userdetail.image else None
+    
+    def get_trip_owner_career(self, obj:Chat):
+        userdetail = UserDetail.objects.filter(user=obj.trip.owner).first()
+        return userdetail.career if userdetail else None
+
     def get_trip_owner_fullname(self, obj:Chat):
         userdetail = UserDetail.objects.filter(user=obj.trip.owner).first()
         return userdetail.fullname if userdetail else None
+    
+    def get_trip_owner_image(self, obj):
+        userdetail = UserDetail.objects.filter(user=obj.trip.owner).first()
+        return str(userdetail.image) if userdetail.image else None
     
     class Meta:
         model = Chat
@@ -152,6 +162,8 @@ class MessengerSerializerRetrieve(serializers.ModelSerializer):
     user_living_in = serializers.SerializerMethodField()
     trip_owner_living_in = serializers.SerializerMethodField()
     trip_rate = serializers.SerializerMethodField()
+    trip_owner_image = serializers.SerializerMethodField()
+    user_image = serializers.SerializerMethodField()
 
     def get_messages(self,obj):
         return [message.__json__() for message in Message.objects.filter(chat=obj.id)]
@@ -183,6 +195,14 @@ class MessengerSerializerRetrieve(serializers.ModelSerializer):
     def get_trip_rate(self, obj:Chat):
         trip = Trip.objects.filter(pk=obj.trip.pk).first()
         return trip.rate if trip else None
+    
+    def get_user_image(self, obj):
+        userdetail = UserDetail.objects.filter(user=obj.user).first()
+        return str(userdetail.image) if userdetail.image else None
+    
+    def get_trip_owner_image(self, obj):
+        userdetail = UserDetail.objects.filter(user=obj.trip.owner).first()
+        return str(userdetail.image) if userdetail.image else None
     
     class Meta:
         model = Chat
