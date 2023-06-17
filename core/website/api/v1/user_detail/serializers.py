@@ -18,7 +18,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = UserDetail
         fields = [
             "pk",
-            "phone",
             "email",
             "first_name",
             "last_name",
