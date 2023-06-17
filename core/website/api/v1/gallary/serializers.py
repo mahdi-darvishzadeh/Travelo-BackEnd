@@ -21,3 +21,8 @@ class GallrySerializer(serializers.ModelSerializer):
             "dislike_count",
             "description",
         ]
+        
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["image"] = str(instance.image) if instance.image else None
+        return data
