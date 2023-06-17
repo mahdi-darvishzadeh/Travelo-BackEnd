@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from website.models.profile import UserDetail
 from website.models.trip import Trip
+from website.models.notification import Notification
+
 from django.urls import reverse
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -125,4 +127,20 @@ class ProfilePeopleSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data["age"] = instance.age
+        return data
+    
+class NotificationSerializerList(serializers.ModelSerializer):
+
+    class Meta:
+        model = Notification
+        fields = [
+                  'pk',
+                  'owner',
+                  'title',
+                  'created_at',
+                  ]
+    
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['owner'] = instance.owner.username
         return data

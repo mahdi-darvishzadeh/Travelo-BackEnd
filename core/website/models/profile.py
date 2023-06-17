@@ -1,5 +1,7 @@
 from django.db import models
 from website.models.users import User
+from website.models.notification import Notification
+from website.models.enums import NotificationEnum
 from django.db.models.signals import post_save
 from django.contrib.postgres import fields as pgmodels
 from django.dispatch import receiver
@@ -12,6 +14,8 @@ from website.api.tools.api import CustomException
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserDetail.objects.create(user=instance)
+        Notification.objects.create(owner=instance, staus_read=False)
+        Notification.objects.create(owner=instance, staus_read=False, title=NotificationEnum.YOUR_EMAIL_HAS_BEEN_CHECKED)
 
 # from website.models.profile import UniqueArrayField
 class UniqueArrayField(pgmodels.ArrayField):

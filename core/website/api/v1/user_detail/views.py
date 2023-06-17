@@ -1,9 +1,10 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-from .serializers import ProfileSerializer, TripSerializerList, ProfilePeopleSerializer
+from .serializers import ProfileSerializer, TripSerializerList, ProfilePeopleSerializer, NotificationSerializerList
 from website.models.profile import UserDetail
 from website.models.users import User
+from website.models.notification import Notification
 from website.api.tools.api import CustomException
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -12,6 +13,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import viewsets
 from website.models.trip import Trip
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
 
 @parser_classes((MultiPartParser, FormParser))
 class ProfileView(GenericAPIView):
@@ -92,4 +94,34 @@ class PeopleViewSet(viewsets.ModelViewSet):
             "views": views_serializer.data,
         }
         return Response(data)
+
+class NotificationViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        notification = Notification.objects.filter(owner=request.user)
+        serializer =  NotificationSerializerList(notification, many=True)
+        return Response(serializer.data)
+    
+class CheckStatusReadAPIView(GenericAPIView):  
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "status": openapi.Schema(
+                    type=openapi.TYPE_BOOLEAN,
+                    description="The status read given by the user",
+                ),
+            },
+            required=["status"],
+        )
+    )  
+    def post(self, request, pk):
+        status = request.data.get("status")
+        notification = get_object_or_404(Notification, pk=pk, owner=request.user)
+        notification.staus_read = status
+        notification.save
+        notification_pk = notification.pk
+        notification.delete()
+        return Response({"success": True , "pk" : notification_pk})    
     
