@@ -66,7 +66,7 @@ class FavoriteTripViewSet(viewsets.ModelViewSet):
         userdetail = UserDetail.objects.get(user=request.user)
         data = []
         for favorite in userdetail.favorite:
-            queryset = get_object_or_404(Trip, appear_in_search=True,pk=favorite)
+            queryset = Trip.objects.filter(appear_in_search=True, pk=favorite)
             serializer = TripSerializerList(queryset, many=True)
             data.extend(serializer.data)
         return Response(data)

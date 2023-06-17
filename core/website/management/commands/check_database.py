@@ -3,10 +3,9 @@ from django.core.management.base import BaseCommand
 from django.db import connections
 from django.db.utils import OperationalError
 from faker import Faker
-import random
 from website.models import User
 from website.models import UserDetail
-from random import randint, uniform, random, choice
+from random import randint, uniform, choice
 import uuid
 
 
