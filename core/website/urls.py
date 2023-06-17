@@ -10,4 +10,5 @@ urlpatterns = [
     path("v1/trip/", include("website.api.v1.trip.urls")),
     path("v1/add-to-favorite/", include("website.api.v1.add_to_favorite.urls")),
     path("v1/gallary/", include("website.api.v1.gallary.urls")),
+    path("v1/messenger/", include("website.api.v1.messenger.urls")),
 ]

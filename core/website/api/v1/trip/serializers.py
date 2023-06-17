@@ -9,7 +9,8 @@ class TripSerializerCreate(serializers.ModelSerializer):
     owner = serializers.SlugRelatedField(
         slug_field="pk",
         queryset=User.objects.all(),
-        required=True,
+        default=serializers.CurrentUserDefault(),
+        required=False,
     )
     moving_day = serializers.DateField(input_formats=["%Y-%m-%d"])
 

@@ -5,7 +5,7 @@ from website.models import Trip, UserDetail
 
 
 class TripSearchSerializer(serializers.ModelSerializer):
-    # absolute_url = serializers.SerializerMethodField()
+    absolute_url = serializers.SerializerMethodField()
     fullname = serializers.SerializerMethodField()
 
     class Meta:
@@ -20,9 +20,9 @@ class TripSearchSerializer(serializers.ModelSerializer):
         userdetail = UserDetail.objects.get(user=obj.owner)
         return f"{userdetail.first_name if userdetail.first_name else ''} {userdetail.last_name if userdetail.last_name else ''}"
 
-    # def get_absolute_url(self, obj):
-    #     return reverse(
-    #         "website:main-page:retrieve-trip", kwargs={"pk": obj.pk}
-    #     )
+    def get_absolute_url(self, obj):
+        return reverse(
+            "website:main-page:retrieve-trip", kwargs={"pk": obj.pk}
+        )
 
     

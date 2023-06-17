@@ -67,3 +67,13 @@ class UserDetail(models.Model):
             )
             return age
         
+    @property
+    def fullname(self):
+        first_name = ""
+        last_name = ""
+        if self.first_name:
+            first_name = self.first_name
+        if self.last_name:
+            last_name = self.last_name
+        return f"{first_name} {last_name}"
+                
