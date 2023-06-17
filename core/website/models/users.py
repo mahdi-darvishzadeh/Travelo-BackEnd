@@ -89,7 +89,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def __str__(self):
-        return f"user obj: {self.email} - {self.phone}"
+        return f"user obj: {self.username}"
 
 
 """Functions"""

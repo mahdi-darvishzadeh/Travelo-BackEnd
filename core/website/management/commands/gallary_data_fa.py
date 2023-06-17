@@ -31,14 +31,15 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        number = options["number"] or 10
+        number = options["number"] or 50
 
         success_count = 0
         failed_count = 0
+        users = User.objects.all()
         for i in range(number):
             try:
                 gallary = Gallary(
-                    owner=User.objects.get(id=i+1),
+                    owner=User.objects.get(id=randint(1, len(users))),
                     title=self.fake.text(max_nb_chars=120),
                     like_count=randint(1,100000),
                     dislike_count=randint(1,100000),

@@ -21,14 +21,15 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        number = options["number"] or 10
+        number = options["number"] or 50
 
         success_count = 0
         failed_count = 0
+        users = User.objects.all()
         for i in range(number):
             try:
                 trip = Trip(
-                    owner=User.objects.get(id=i+1),
+                    owner=User.objects.get(id=randint(1, len(users))),
                     country="ایران",
                     from_city=choice(self.cities[randint(0, len(self.cities))]['sub']),
                     to_city=choice(self.cities[randint(0, len(self.cities))]['sub']),

@@ -22,6 +22,8 @@ services:
              python manage.py check_database &&
              python manage.py trip_data_fa &&
              python manage.py gallary_data_fa &&
+             python manage.py chat_data_fa &&
+             python manage.py message_data_fa &&
              python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./core:/app
