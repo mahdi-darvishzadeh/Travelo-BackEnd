@@ -10,7 +10,7 @@ class Command(BaseCommand):
     
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
-        self.fake = Faker("fa_IR")
+        self.fake = Faker("en_US")
         with open('assets/cities.json') as read_file:
             self.r = read_file.read()
             self.cities = json.loads(self.r)
@@ -30,12 +30,13 @@ class Command(BaseCommand):
             try:
                 trip = Trip(
                     owner=User.objects.get(id=randint(1, len(users))),
-                    country="ایران",
+                    country="Iran",
                     from_city=choice(self.cities[randint(0, len(self.cities))]['sub']),
                     to_city=choice(self.cities[randint(0, len(self.cities))]['sub']),
                     moving_day=timezone.now(),
+                    day_to=timezone.now(),
                     appear_in_search=True,
-                    Transportstion=choice(["سواری","مینی بوس","ون","مینی ون","اتوبوس","موتور"]),
+                    Transportstion=choice(["Riding","Minibus","Van","minion","Bus","Engine"]),
                     price=randint(50000,500000),
                     like_count=randint(1,100000),
                     dislike_count=randint(1,100000),

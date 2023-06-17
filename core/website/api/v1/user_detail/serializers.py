@@ -2,6 +2,7 @@ from rest_framework import serializers
 from website.models.profile import UserDetail
 from website.models.trip import Trip
 from website.models.notification import Notification
+from django.conf import settings
 
 from django.urls import reverse
 
@@ -71,6 +72,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     
 class TripSerializerList(serializers.ModelSerializer):
     absolute_url = serializers.SerializerMethodField()
+    trip_owner_fullname = serializers.SerializerMethodField()
+    trip_owner_image = serializers.SerializerMethodField()
 
     class Meta:
         model = Trip
@@ -78,7 +81,10 @@ class TripSerializerList(serializers.ModelSerializer):
         fields = [
             "pk",
             "absolute_url",
+            "trip_owner_fullname",
+            "trip_owner_image",
             "moving_day",
+            "day_to",
             "from_city",
             "to_city",
             "Transportstion",
@@ -93,6 +99,14 @@ class TripSerializerList(serializers.ModelSerializer):
         return reverse(
             "website:main-page:retrieve-trip", kwargs={"pk": obj.pk}
         )
+        
+    def get_trip_owner_fullname(self, obj):
+        userdetail = UserDetail.objects.filter(user=obj.owner).first()
+        return userdetail.fullname if userdetail else None
+    
+    def get_trip_owner_image(self, obj):
+        userdetail = UserDetail.objects.filter(user=obj.owner).first()
+        return settings.MEDIA_URL + str(userdetail.image) if userdetail.image else None
         
 class ProfilePeopleSerializer(serializers.ModelSerializer):
 

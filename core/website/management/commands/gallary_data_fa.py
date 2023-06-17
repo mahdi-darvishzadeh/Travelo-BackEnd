@@ -8,7 +8,7 @@ class Command(BaseCommand):
     
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
-        self.fake = Faker("fa_IR")
+        self.fake = Faker("en_US")
         self.images = [
             'static-files/gallary/1.jpeg',
             'static-files/gallary/2.jpeg',

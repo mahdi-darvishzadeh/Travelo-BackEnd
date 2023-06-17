@@ -13,6 +13,7 @@ class TripSerializerCreate(serializers.ModelSerializer):
         required=False,
     )
     moving_day = serializers.DateField(input_formats=["%Y-%m-%d"])
+    day_to = serializers.DateField(input_formats=["%Y-%m-%d"])
 
     class Meta:
         model = Trip
@@ -23,6 +24,7 @@ class TripSerializerCreate(serializers.ModelSerializer):
             "from_city",
             "to_city",
             "moving_day",
+            "day_to",
             "Transportstion",
             "price",
             "description"

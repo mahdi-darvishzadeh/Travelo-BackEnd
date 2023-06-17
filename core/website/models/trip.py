@@ -7,6 +7,7 @@ class Trip(models.Model):
     from_city = models.CharField(null=True, blank=True, max_length=255)
     to_city = models.CharField(null=True, blank=True, max_length=255)
     moving_day = models.DateField(null=True, blank=True)
+    day_to = models.DateField(null=True, blank=True)
     Transportstion = models.CharField(null=True, blank=True, max_length=255)
     price = models.IntegerField(default=0, max_length=20, null=True, blank=True)
     like_count = models.IntegerField(default=0, max_length=20, null=True, blank=True)

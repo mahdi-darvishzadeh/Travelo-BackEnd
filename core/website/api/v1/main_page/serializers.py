@@ -20,6 +20,7 @@ class TripSerializerList(serializers.ModelSerializer):
             "trip_owner_fullname",
             "trip_owner_image",
             "moving_day",
+            "day_to",
             "from_city",
             "to_city",
             "Transportstion",
