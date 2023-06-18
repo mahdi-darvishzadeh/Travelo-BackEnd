@@ -61,7 +61,7 @@ class TripSearchGenericAPIView(GenericAPIView):
                 moving_day__day=my_date.day,
             )
         if price_query:
-            queryset = queryset.filter(price__lt=int(price_query))
+            queryset = queryset.filter(price__lte=int(price_query))
 
         serializer = self.serializer_class(queryset, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
