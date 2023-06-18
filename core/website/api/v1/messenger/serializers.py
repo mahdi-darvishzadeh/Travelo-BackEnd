@@ -54,10 +54,10 @@ class MessageSerializerCreate(serializers.ModelSerializer):
     def validate(self, attrs):
         chat = attrs.get("chat")
         author = attrs.get("author")
-        if (chat.user or chat.trip.owner) == author:
+        if chat.user or chat.trip.owner == author:
             return super().validate(attrs)
         else:
-            raise serializers.ValidationError("Invalid date")
+            raise serializers.ValidationError("Invalid author")
     
     def to_representation(self, instance):
         data = super().to_representation(instance)
