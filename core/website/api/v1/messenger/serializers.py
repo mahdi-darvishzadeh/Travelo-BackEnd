@@ -54,6 +54,8 @@ class MessageSerializerCreate(serializers.ModelSerializer):
     def validate(self, attrs):
         chat = attrs.get("chat")
         author = attrs.get("author")
+        if User.objects.filter(username=author.username).exists() == False:
+            raise serializers.ValidationError("Author not found")
         if chat.user or chat.trip.owner == author:
             return super().validate(attrs)
         else:
