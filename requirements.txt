@@ -45,3 +45,5 @@ django-sslserver
 
 
 python-dateutil
+
+django-ckeditor

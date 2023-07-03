@@ -1,5 +1,6 @@
 from django.db import models
 from website.models import User
+from ckeditor.fields import RichTextField
 
 class Trip(models.Model):
     owner = models.ForeignKey(User , on_delete=models.CASCADE, null=True, blank=True)
@@ -13,7 +14,7 @@ class Trip(models.Model):
     like_count = models.IntegerField(default=0, max_length=20, null=True, blank=True)
     dislike_count = models.IntegerField(default=0, max_length=20, null=True, blank=True)
     rate = models.FloatField(null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
+    description = RichTextField(null=True, blank=True)
     
     appear_in_search = models.BooleanField(default=False)
 

@@ -11,6 +11,7 @@ api_urlpatterns = [path("api/", include("website.urls"))]
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 
